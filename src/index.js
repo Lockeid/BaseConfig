@@ -3,13 +3,6 @@ import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute } from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 
-import Login from './pages/Login';
-import Logout from './pages/Logout';
-import Menu from './pages/Menu';
-import AlbumList from './pages/AlbumList';
-
-import auth from './services/AuthHandler';
-
 class App extends Component {
   static propTypes = {
     children: React.PropTypes.object.isRequired,
@@ -27,22 +20,10 @@ class App extends Component {
   }
 }
 
-function requireAuth(nextState, replaceState) {
-  if (!auth.isLoggedIn()) {
-    replaceState({ nextPathname: nextState.location.pathname }, '/login');
-  }
-}
 
 ReactDOM.render(
 (
   <Router history={createBrowserHistory()}>
-    <Route path="login" component={Login} />
-    <Route path="logout" component={Logout} />
-    <Route path="/" component={App}>
-      <IndexRoute component={AlbumList} onEnter={requireAuth} />
-      <Route path="home" component={AlbumList} onEnter={requireAuth} />
-      <Route path="submit" onEnter={requireAuth} />
-      <Route path="*" component={AlbumList} onEnter={requireAuth}/>
-    </Route>
+    <Route path="/" component={App} />
   </Router>
 ), document.getElementById('root'));
